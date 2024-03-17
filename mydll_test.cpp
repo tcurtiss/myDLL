@@ -32,31 +32,31 @@
 // Simple test harness
 int main()
 {
-	// Try loading the shared library via Win32/POSIX API
-	DLLHANDLE handle = LOAD_DLL(MYSHAREDLIBNAME);
+  // Try loading the shared library via Win32/POSIX API
+  DLLHANDLE handle = LOAD_DLL(MYSHAREDLIBNAME);
 
-	// Check if the shared library was loaded
-	if (handle) {
-		std::cout << "Loaded shared library " << MYSHAREDLIBNAME << std::endl;
-	} else {
-		std::cerr << "Failed to load shared library " << MYSHAREDLIBNAME << std::endl;
-		return 1; // Error
-	}
+  // Check if the shared library was loaded
+  if (handle) {
+    std::cout << "Loaded shared library " << MYSHAREDLIBNAME << std::endl;
+  } else {
+    std::cerr << "Failed to load shared library " << MYSHAREDLIBNAME << std::endl;
+    return 1; // Error
+  }
 
-	// Test the shared library method(s) here...
-	mymethod_t mymethod = (mymethod_t)GET_DLL_FUNC(handle, mymethod_name);
-	if (mymethod) {
-		std::cout << "Calling mymethod():" << std::endl;
-		mymethod();
-	} else {
-		std::cerr << "Failed to get " << mymethod_name << "() from shared library " << MYSHAREDLIBNAME << std::endl;
-		return 1; // Error
-	}
+  // Test the shared library method(s) here...
+  mymethod_t mymethod = (mymethod_t)GET_DLL_FUNC(handle, mymethod_name);
+  if (mymethod) {
+    std::cout << "Calling mymethod():" << std::endl;
+    mymethod();
+  } else {
+    std::cerr << "Failed to get " << mymethod_name << "() from shared library " << MYSHAREDLIBNAME << std::endl;
+    return 1; // Error
+  }
 
-	// Unload the DLL via Win32/POSIX API
-	if (handle) {
-		int status = UNLOAD_DLL(handle);
-		std::cout << "Unloaded shared library " << MYSHAREDLIBNAME << " with status: " << status << std::endl;
-	}
-	return 0; // Success
+  // Unload the DLL via Win32/POSIX API
+  if (handle) {
+    int status = UNLOAD_DLL(handle);
+    std::cout << "Unloaded shared library " << MYSHAREDLIBNAME << " with status: " << status << std::endl;
+  }
+  return 0; // Success
 }
